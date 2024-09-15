@@ -26,7 +26,7 @@ To install and run the Restaurant CLI Application, follow these steps:
     java -cp bin Main
     ``` 
 
-**Usage**
+**Usage*
 
 Once the application is running, follow the on-screen prompts to navigate through the menu.
 
