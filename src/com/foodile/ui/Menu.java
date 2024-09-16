@@ -34,7 +34,7 @@ public class Menu {
                 int input = scanner.nextInt();
                 switch (input) {
                     case 1 -> new CustomerMenu().displayMenu(); // Ensure CustomerMenu is correctly implemented
-                    //case 2 -> new RestaurantMenu().displayMenu(); // Ensure RestaurantMenu is correctly implemented
+                    case 2 -> new RestaurantMenu().displayMenu(); // Ensure RestaurantMenu is correctly implemented
                     case 3 -> new DishMenu(dishController).displayMenu(); // Pass dishController to DishesMenu
                     //case 4 -> new OrderMenu().displayMenu(); // Ensure OrderMenu is correctly implemented
                     case 5 -> {
