@@ -1,9 +1,12 @@
 package com.foodile.ui;
 
+import com.foodile.model.Dish;
 import com.foodile.model.Restaurants;
 import com.foodile.exceptions.RestaurantNotFoundException;
 import com.foodile.exceptions.RestaurantExistsException;
 import com.foodile.repository.RestaurantRepository;
+import com.foodile.service.DishService;
+import com.foodile.service.DishServiceImpl;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,6 +16,7 @@ import java.util.Scanner;
 public class RestaurantMenu extends Menu {
 
     private RestaurantRepository restaurantRepository;
+    private DishServiceImpl dishService;
 
     public RestaurantMenu() {
         this.restaurantRepository = new RestaurantRepository(); // Initialize the repository
@@ -176,5 +180,19 @@ public class RestaurantMenu extends Menu {
         System.out.printf("%-10s %-30s %-80s %-30s\n", "Id", "Name", "Address", "Menu Items");
         printDashLine();
         System.out.printf("%-10s %-30s %-80s %-30s\n", restaurant.getId(), restaurant.getName(), restaurant.getAddress(), String.join(":", restaurant.getMenu()));
+    }
+
+    public RestaurantMenu(DishServiceImpl dishService) {
+        this.dishService = dishService;
+    }
+
+    public void displayMenuItems(String restaurantId) {
+        try {
+            List<Dish> dishList = dishService.getDishesByRestaurantId(restaurantId);  // Assuming this method exists
+            System.out.printf("%-10s %-30s %-60s %-10s\n", "Dish ID", "Name", "Description", "Price");
+            dishList.forEach(dish -> System.out.printf("%-10s %-30s %-60s %-10.2f\n", dish.getId(), dish.getName(), dish.getDescription(), dish.getPrice()));
+        } catch (Exception e) {
+            System.out.println("Error fetching menu items: " + e.getMessage());
+        }
     }
 }

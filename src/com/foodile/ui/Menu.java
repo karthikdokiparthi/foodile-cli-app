@@ -1,19 +1,27 @@
 package com.foodile.ui;
 
 import com.foodile.controller.DishController;
+import com.foodile.controller.OrderController;
+import com.foodile.repository.OrderRepository;
 import com.foodile.service.DishServiceImpl;
+import com.foodile.service.OrderServiceImpl;
 
 import java.util.Scanner;
 
 public class Menu {
     private final DishController dishController;
+    private final OrderController orderController;
 
-    public Menu(DishController dishController) {
+    // Constructor to initialize both DishController and OrderController
+    public Menu(DishController dishController, OrderController orderController) {
         this.dishController = dishController;
+        this.orderController = orderController;
     }
 
+    // Default constructor with default implementations
     public Menu() {
-        this.dishController = new DishController(new DishServiceImpl()); // Initialize with a default service implementation
+        this.dishController = new DishController(new DishServiceImpl());
+        this.orderController = new OrderController(new OrderServiceImpl(new OrderRepository()));
     }
 
     public void displayMenu() {
@@ -35,8 +43,8 @@ public class Menu {
                 switch (input) {
                     case 1 -> new CustomerMenu().displayMenu(); // Ensure CustomerMenu is correctly implemented
                     case 2 -> new RestaurantMenu().displayMenu(); // Ensure RestaurantMenu is correctly implemented
-                    case 3 -> new DishMenu(dishController).displayMenu(); // Pass dishController to DishesMenu
-                    //case 4 -> new OrderMenu().displayMenu(); // Ensure OrderMenu is correctly implemented
+                    case 3 -> new DishMenu(dishController).displayMenu(); // Pass dishController to DishMenu
+                    case 4 -> new OrderMenu(orderController).displayMenu(); // Pass orderController to OrderMenu
                     case 5 -> {
                         System.out.println("Thanks for choosing Foodie App, See you again !");
                         System.exit(0);

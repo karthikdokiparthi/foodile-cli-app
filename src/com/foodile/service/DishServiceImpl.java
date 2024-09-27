@@ -8,12 +8,14 @@ import com.foodile.exceptions.DishNotFoundException;
 import java.util.List;
 
 public class DishServiceImpl {
-    private final DishRepository dishRepository;
+    private DishRepository dishRepository;
 
     public DishServiceImpl() {
         this.dishRepository = new DishRepository(); // Initialize with default repository
     }
-
+    public DishServiceImpl(DishRepository dishRepo){
+        this.dishRepository=dishRepo;
+    }
     public List<Dish> getDishesList() {
         return dishRepository.getDishList();
     }
@@ -39,5 +41,9 @@ public class DishServiceImpl {
     public void delete(String id) throws DishNotFoundException {
         Dish dish = dishRepository.findDishById(id).orElseThrow(() -> new DishNotFoundException("Dish not found with id: " + id));
         dishRepository.deleteDish(dish);
+    }
+
+    public List<Dish> getDishesByRestaurantId(String restaurantId) throws DishNotFoundException {
+        return (List<Dish>) dishRepository.findDishById(restaurantId).orElseThrow(() -> new DishNotFoundException("Dish not found with id: " + restaurantId));
     }
 }
